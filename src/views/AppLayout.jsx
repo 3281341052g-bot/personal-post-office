@@ -41,18 +41,25 @@ export default function AppLayout() {
 
   return (
     <div className="flex h-screen overflow-hidden relative"
-      style={{background:'linear-gradient(135deg,#0d1b2e 0%,#1a2d4a 50%,#1e3558 100%)'}}>
+      style={{background:'linear-gradient(135deg,#080f1e 0%,#0f1e3a 40%,#162545 70%,#1a2d55 100%)'}}>
 
       {/* 全局背景光晕 */}
       <div className="absolute pointer-events-none"
-        style={{top:'-100px', left:'100px', width:'500px', height:'500px',
-          background:'radial-gradient(circle,rgba(77,166,255,0.18) 0%,transparent 70%)', filter:'blur(60px)'}} />
+        style={{top:'-200px', left:'-50px', width:'750px', height:'750px',
+          background:'radial-gradient(circle at 40% 35%, rgba(50,130,255,0.5) 0%, rgba(60,100,255,0.2) 35%, transparent 65%)',
+          filter:'blur(55px)'}} />
       <div className="absolute pointer-events-none"
-        style={{bottom:'-80px', right:'200px', width:'400px', height:'400px',
-          background:'radial-gradient(circle,rgba(120,80,255,0.15) 0%,transparent 70%)', filter:'blur(60px)'}} />
+        style={{bottom:'-150px', right:'-50px', width:'650px', height:'650px',
+          background:'radial-gradient(circle at 55% 55%, rgba(140,70,255,0.45) 0%, rgba(110,50,220,0.2) 38%, transparent 65%)',
+          filter:'blur(55px)'}} />
       <div className="absolute pointer-events-none"
-        style={{top:'40%', right:'10%', width:'300px', height:'300px',
-          background:'radial-gradient(circle,rgba(0,200,180,0.1) 0%,transparent 70%)', filter:'blur(50px)'}} />
+        style={{top:'30%', right:'5%', width:'500px', height:'500px',
+          background:'radial-gradient(circle at 50% 50%, rgba(0,200,180,0.28) 0%, rgba(0,170,160,0.1) 40%, transparent 70%)',
+          filter:'blur(50px)'}} />
+      <div className="absolute pointer-events-none"
+        style={{bottom:'15%', left:'20%', width:'400px', height:'400px',
+          background:'radial-gradient(circle at 50% 50%, rgba(255,80,160,0.2) 0%, transparent 65%)',
+          filter:'blur(50px)'}} />
 
       {/* 侧边栏 */}
       <aside className="w-56 flex-shrink-0 flex flex-col py-4 border-r border-white/15 relative z-10"

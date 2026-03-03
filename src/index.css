@@ -10,7 +10,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #0d1b2e 0%, #1a2d4a 50%, #1e3558 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #142040 50%, #1a2d55 100%);
   background-attachment: fixed;
   color: rgba(255, 255, 255, 0.92);
   min-height: 100vh;
@@ -19,25 +19,26 @@ body {
 /* ── 玻璃效果 ─────────────────────────────── */
 
 .glass {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    0 4px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .glass-strong {
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(48px) saturate(220%);
+  -webkit-backdrop-filter: blur(48px) saturate(220%);
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.32);
   box-shadow:
-    0 8px 40px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
 }
 
 /* 彩虹折射层 */
@@ -47,12 +48,23 @@ body {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 120, 180, 0.08) 0%,
-    rgba(120, 160, 255, 0.08) 35%,
-    rgba(100, 220, 200, 0.07) 70%,
-    rgba(255, 200, 100, 0.04) 100%
+    rgba(255, 100, 180, 0.13) 0%,
+    rgba(100, 160, 255, 0.12) 30%,
+    rgba(80, 220, 200, 0.1) 65%,
+    rgba(255, 200, 80, 0.06) 100%
   );
   border-radius: inherit;
+  pointer-events: none;
+}
+
+/* 顶部高光边缘 */
+.glass-shine::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 8px; right: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.7) 70%, transparent);
+  border-radius: 999px;
   pointer-events: none;
 }
 
@@ -61,24 +73,24 @@ body {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.92);
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 .glass-input:focus {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(77, 166, 255, 0.7);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(77, 166, 255, 0.8);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.25), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 .glass-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.32);
 }
 
 /* 发光阴影 */
 .glow-blue {
-  box-shadow: 0 0 20px rgba(77, 166, 255, 0.4), 0 4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 24px rgba(77, 166, 255, 0.55), 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 .glow-green {
-  box-shadow: 0 0 20px rgba(52, 199, 89, 0.4), 0 4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 24px rgba(52, 199, 89, 0.5), 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* ── 滚动条 ───────────────────────────────── */
