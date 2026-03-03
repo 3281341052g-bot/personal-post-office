@@ -10,91 +10,11 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #0a1628 0%, #142040 50%, #1a2d55 100%);
-  background-attachment: fixed;
-  color: rgba(255, 255, 255, 0.92);
-  min-height: 100vh;
+  background: #f5f5f7;
+  color: #1d1d1f;
 }
 
-/* ── 玻璃效果 ─────────────────────────────── */
-
-.glass {
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow:
-    0 4px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1.5px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
-.glass-strong {
-  backdrop-filter: blur(48px) saturate(220%);
-  -webkit-backdrop-filter: blur(48px) saturate(220%);
-  background: rgba(255, 255, 255, 0.13);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  box-shadow:
-    0 12px 48px rgba(0, 0, 0, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.2),
-    inset 0 2px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
-}
-
-/* 彩虹折射层 */
-.prism::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 100, 180, 0.13) 0%,
-    rgba(100, 160, 255, 0.12) 30%,
-    rgba(80, 220, 200, 0.1) 65%,
-    rgba(255, 200, 80, 0.06) 100%
-  );
-  border-radius: inherit;
-  pointer-events: none;
-}
-
-/* 顶部高光边缘 */
-.glass-shine::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 8px; right: 8px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.7) 70%, transparent);
-  border-radius: 999px;
-  pointer-events: none;
-}
-
-/* 玻璃输入框 */
-.glass-input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.92);
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-}
-.glass-input:focus {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(77, 166, 255, 0.8);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.25), inset 0 1px 0 rgba(255,255,255,0.2);
-}
-.glass-input::placeholder {
-  color: rgba(255, 255, 255, 0.32);
-}
-
-/* 发光阴影 */
-.glow-blue {
-  box-shadow: 0 0 24px rgba(77, 166, 255, 0.55), 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-.glow-green {
-  box-shadow: 0 0 24px rgba(52, 199, 89, 0.5), 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-
-/* ── 滚动条 ───────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.22); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.38); }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.32); }
