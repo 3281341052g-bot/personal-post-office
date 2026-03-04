@@ -45,7 +45,17 @@ window.composeView = {
     </div>`;
   },
 
-  init() {},
+  _replyTo(email) {
+    this._pendingTo = email;
+  },
+
+  init() {
+    if (this._pendingTo) {
+      const el = document.getElementById('composeTo');
+      if (el) el.value = this._pendingTo;
+      this._pendingTo = null;
+    }
+  },
 
   _clear() {
     if (!confirm('确定清空内容吗？')) return;

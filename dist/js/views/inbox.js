@@ -121,7 +121,7 @@ window.inboxView = {
             ${msg.package ? `<div class="detail-meta-row"><span class="meta-label">套餐</span><span class="meta-value">${escHtml(msg.package)}</span></div>` : ''}
           </div>
           <div class="detail-actions">
-            <button class="btn btn-secondary" onclick="router.go('compose')">↩ 回复</button>
+            <button class="btn btn-secondary" onclick="composeView._replyTo('${escHtml(msg.fromEmail)}');router.go('compose')">↩ 回复</button>
             <button class="btn btn-danger" onclick="inboxView._delete('${msg.id}')">🗑 删除</button>
             ${msg.trackingId ? `<button class="btn btn-ghost" onclick="router.go('tracking')">📦 追踪</button>` : ''}
           </div>
