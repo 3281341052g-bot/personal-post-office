@@ -15,6 +15,11 @@ $method = $_SERVER['REQUEST_METHOD'];
 // ── 获取列表 ───────────────────────────────
 if ($method === 'GET' && !get('id')) {
     $folder = get('folder', 'inbox');
+
+    if (!$cfg) {
+        ok(['demo' => true, 'folder' => $folder]);
+    }
+
     if ($folder === 'sent') {
         // 自动检测已发送文件夹名
         $imap = new ImapClient($cfg, $sess['email'], $sess['password']);
@@ -23,11 +28,6 @@ if ($method === 'GET' && !get('id')) {
         $imap->close();
     } else {
         $imapFolder = 'INBOX';
-    }
-
-    if (!$cfg) {
-        // 演示模式：读 localStorage 里的 Mock 数据（前端处理）
-        ok(['demo' => true, 'folder' => $folder]);
     }
 
     try {
