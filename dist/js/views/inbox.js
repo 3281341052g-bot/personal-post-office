@@ -93,24 +93,7 @@ window.inboxView = {
       const det = document.getElementById('inboxDetail');
       if (!det) return;
 
-      const trackingHtml = msg.trackingId ? `
-        <div class="detail-tracking-bar">
-          <div class="tracking-bar-title">📦 追踪编号：${msg.trackingId}</div>
-          <div class="tracking-steps-mini" id="trackMini">
-            ${[0,1,2,3,4].map(i => `
-              <div class="ts-dot ${i < 3 ? 'done' : i === 3 ? 'active' : ''}"></div>
-              ${i < 4 ? '<div class="ts-line ' + (i < 2 ? 'done' : '') + '"></div>' : ''}
-            `).join('')}
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-top:6px">
-            <span style="font-size:11px;color:var(--text-secondary)">
-              ${msg.from_city || '寄出地'} → ${msg.to_city || '目的地'}
-            </span>
-            <span style="font-size:11px;color:var(--accent);cursor:pointer"
-                  onclick="router.go('tracking')">查看详情 ›</span>
-          </div>
-        </div>
-      ` : '';
+      const trackingHtml = '';
 
       det.innerHTML = `
         <div class="detail-header">
@@ -118,12 +101,10 @@ window.inboxView = {
           <div class="detail-meta">
             <div class="detail-meta-row"><span class="meta-label">发件人</span><span class="meta-value">${escHtml(msg.from)} &lt;${escHtml(msg.fromEmail)}&gt;</span></div>
             <div class="detail-meta-row"><span class="meta-label">日期</span><span class="meta-value">${new Date(msg.date).toLocaleString('zh-CN')}</span></div>
-            ${msg.package ? `<div class="detail-meta-row"><span class="meta-label">套餐</span><span class="meta-value">${escHtml(msg.package)}</span></div>` : ''}
           </div>
           <div class="detail-actions">
             <button class="btn btn-secondary" onclick="composeView._replyTo('${escHtml(msg.fromEmail)}');router.go('compose')">↩ 回复</button>
             <button class="btn btn-danger" onclick="inboxView._delete('${msg.id}')">🗑 删除</button>
-            ${msg.trackingId ? `<button class="btn btn-ghost" onclick="router.go('tracking')">📦 追踪</button>` : ''}
           </div>
         </div>
         ${trackingHtml}

@@ -9,7 +9,6 @@
     inbox:     window.inboxView,
     sent:      window.sentView,
     trash:     window.trashView,
-    tracking:  window.trackingView,
     contacts:  window.contactsView,
     settings:  window.settingsView
   };
@@ -20,7 +19,6 @@
     inbox:     '收件箱',
     sent:      '已发送',
     trash:     '回收站',
-    tracking:  '实时追踪',
     contacts:  '地址簿',
     settings:  '设置'
   };

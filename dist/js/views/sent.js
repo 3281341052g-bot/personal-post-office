@@ -77,39 +77,17 @@ window.sentView = {
       const det = document.getElementById('sentDetail');
       if (!det) return;
 
-      const statusMap = { delivered: ['已送达', 'var(--success)'], transit: ['运输中', 'var(--warning)'], processing: ['处理中', 'var(--accent)'] };
-      const [statusText, statusColor] = statusMap[msg.trackingStatus] || ['未知', 'var(--text-secondary)'];
-
-      const trackHtml = msg.trackingId ? `
-        <div class="detail-tracking-bar">
-          <div class="tracking-bar-title" style="display:flex;justify-content:space-between">
-            <span>📦 追踪编号：${msg.trackingId}</span>
-            <span style="color:${statusColor};font-weight:600">${statusText}</span>
-          </div>
-          <div style="margin-top:10px;font-size:13px;color:var(--text-secondary)">
-            ${msg.from_city || '寄出地'} → ${msg.to_city || '目的地'}
-            ${msg.package ? ` · ${msg.package}套餐` : ''}
-          </div>
-          <div style="margin-top:8px">
-            <span style="font-size:12px;color:var(--accent);cursor:pointer" onclick="router.go('tracking')">查看追踪详情 ›</span>
-          </div>
-        </div>
-      ` : '';
-
       det.innerHTML = `
         <div class="detail-header">
           <div class="detail-subject">${_escHtml(msg.subject)}</div>
           <div class="detail-meta">
             <div class="detail-meta-row"><span class="meta-label">收件人</span><span class="meta-value">${_escHtml(msg.to)}</span></div>
             <div class="detail-meta-row"><span class="meta-label">发送时间</span><span class="meta-value">${new Date(msg.date).toLocaleString('zh-CN')}</span></div>
-            ${msg.package ? `<div class="detail-meta-row"><span class="meta-label">套餐</span><span class="meta-value">${_escHtml(msg.package)}</span></div>` : ''}
           </div>
           <div class="detail-actions">
             <button class="btn btn-danger" onclick="sentView._delete('${msg.id}')">🗑 删除</button>
-            ${msg.trackingId ? `<button class="btn btn-ghost" onclick="router.go('tracking')">📦 追踪</button>` : ''}
           </div>
         </div>
-        ${trackHtml}
         <div class="detail-body">${_escHtml(msg.body || '')}</div>
       `;
     });

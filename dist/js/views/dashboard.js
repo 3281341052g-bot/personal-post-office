@@ -9,7 +9,7 @@ window.dashboardView = {
       <!-- 欢迎横幅 -->
       <div class="welcome-banner" id="welcomeBanner">
         <h2>早上好，<span id="dashUserName">朋友</span> 👋</h2>
-        <p>你有 <b id="dashUnread">0</b> 封未读信件，<b id="dashTransit">0</b> 封信件在途中。</p>
+        <p>你有 <b id="dashUnread">0</b> 封未读信件。</p>
         <button class="btn btn-primary" onclick="router.go('compose')" style="background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.4);">
           ✍️ 立即写信
         </button>
@@ -28,12 +28,6 @@ window.dashboardView = {
           <div class="stat-value" id="statSent">–</div>
           <div class="stat-name">已发送</div>
           <div class="stat-trend">↑ 保持联系中</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon">📦</span>
-          <div class="stat-value" id="statTransit">–</div>
-          <div class="stat-name">在途信件</div>
-          <div class="stat-trend" style="color:var(--warning)">实时追踪中</div>
         </div>
         <div class="stat-card">
           <span class="stat-icon">👥</span>
@@ -69,13 +63,6 @@ window.dashboardView = {
                 <div class="qb-desc">寄给最重要的人</div>
               </div>
             </button>
-            <button class="quick-btn" onclick="router.go('tracking')">
-              <span class="qb-icon">📦</span>
-              <div>
-                <div>追踪信件</div>
-                <div class="qb-desc">查看在途状态</div>
-              </div>
-            </button>
             <button class="quick-btn" onclick="router.go('contacts')">
               <span class="qb-icon">👥</span>
               <div>
@@ -107,17 +94,13 @@ window.dashboardView = {
     Promise.all([
       api.getMessages('inbox'),
       api.getMessages('sent'),
-      api.getAllTracking(),
       api.getContacts()
-    ]).then(([inbox, sent, tracking, contacts]) => {
+    ]).then(([inbox, sent, contacts]) => {
       const unread = inbox.filter(m => m.unread).length;
-      const transit = tracking.filter(t => t.status === 'transit').length;
 
       document.getElementById('dashUnread').textContent = unread;
-      document.getElementById('dashTransit').textContent = transit;
       document.getElementById('statInbox').textContent = inbox.length;
       document.getElementById('statSent').textContent = sent.length;
-      document.getElementById('statTransit').textContent = transit;
       document.getElementById('statContacts').textContent = contacts.length;
       document.getElementById('statUnreadHint').textContent = unread > 0 ? `● ${unread} 封未读` : '全部已读';
       document.getElementById('statUnreadHint').style.color = unread > 0 ? 'var(--accent)' : 'var(--success)';
