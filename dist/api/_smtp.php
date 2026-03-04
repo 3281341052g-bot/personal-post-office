@@ -21,8 +21,9 @@ class SmtpClient {
     public function send($to, $toEmail, $subject, $body) {
         $this->connect();
         $this->auth();
-        $this->sendMail($to, $toEmail, $subject, $body);
+        $rawMsg = $this->sendMail($to, $toEmail, $subject, $body);
         $this->quit();
+        return $rawMsg;
     }
 
     public function test() {
@@ -88,20 +89,21 @@ class SmtpClient {
         $toName   = '=?UTF-8?B?' . base64_encode($to) . '?=';
         $bodyEncoded = base64_encode($body);
 
-        $headers  = "Date: $date\r\n";
-        $headers .= "From: $fromName <{$this->email}>\r\n";
-        $headers .= "To: $toName <{$toEmail}>\r\n";
-        $headers .= "Subject: $subjectEncoded\r\n";
-        $headers .= "Message-ID: $msgId\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $headers .= "Content-Transfer-Encoding: base64\r\n";
-        $headers .= "\r\n";
-        $headers .= chunk_split($bodyEncoded);
-        $headers .= "\r\n.";
+        $rawMsg  = "Date: $date\r\n";
+        $rawMsg .= "From: $fromName <{$this->email}>\r\n";
+        $rawMsg .= "To: $toName <{$toEmail}>\r\n";
+        $rawMsg .= "Subject: $subjectEncoded\r\n";
+        $rawMsg .= "Message-ID: $msgId\r\n";
+        $rawMsg .= "MIME-Version: 1.0\r\n";
+        $rawMsg .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $rawMsg .= "Content-Transfer-Encoding: base64\r\n";
+        $rawMsg .= "\r\n";
+        $rawMsg .= chunk_split($bodyEncoded);
 
-        $this->cmd($headers);
+        $this->cmd($rawMsg . "\r\n.");
         $this->expect('250');
+
+        return $rawMsg;
     }
 
     private function quit() {

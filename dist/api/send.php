@@ -5,6 +5,7 @@
  */
 require '_helper.php';
 require '_smtp.php';
+require '_imap.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') err('仅支持 POST', 405);
 
@@ -43,7 +44,20 @@ if (!$cfg) {
 // ── 真实发送 ───────────────────────────────
 try {
     $smtp = new SmtpClient($cfg, $sess['email'], $sess['password']);
-    $smtp->send($to, $toEmail, $subject, $body);
+    $rawMsg = $smtp->send($to, $toEmail, $subject, $body);
+
+    // 发送成功后把副本存入 IMAP Sent 文件夹
+    try {
+        $imap = new ImapClient($cfg, $sess['email'], $sess['password']);
+        $imap->connect();
+        $sentFolder = $imap->getSentFolder();
+        $imap->close();
+        $imap->appendToSent($sentFolder, $rawMsg);
+    } catch (Exception $e2) {
+        // IMAP 存副本失败不影响发送成功
+        error_log('IMAP append 失败: ' . $e2->getMessage());
+    }
+
     ok(['demo' => false, 'trackingId' => $trackingId, 'success' => true]);
 } catch (Exception $e) {
     err('发送失败：' . $e->getMessage());

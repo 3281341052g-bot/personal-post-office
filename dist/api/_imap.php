@@ -207,6 +207,16 @@ class ImapClient {
         return ['name' => $name ?: $email, 'email' => $email];
     }
 
+    // 把邮件副本存入 Sent 文件夹（imap_append）
+    public function appendToSent($sentFolder, $rawMsg) {
+        $flag    = $this->ssl ? '/ssl/novalidate-cert' : '/notls';
+        $server  = '{' . $this->host . ':' . $this->port . '/imap' . $flag . '}';
+        $conn    = @imap_open($server . $sentFolder, $this->email, $this->password);
+        if (!$conn) throw new Exception('IMAP append: 无法连接 ' . $sentFolder);
+        imap_append($conn, $server . $sentFolder, $rawMsg, '\\Seen');
+        imap_close($conn);
+    }
+
     // 自动检测已发送文件夹名（不同服务器命名不同）
     public function getSentFolder() {
         $candidates = ['Sent', 'INBOX.Sent', 'Sent Items', '已发送', 'INBOX.Sent Items'];
