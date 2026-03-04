@@ -40,7 +40,7 @@ window.sentView = {
       const filtered = this._messages.filter(m =>
         m.to.toLowerCase().includes(q) ||
         m.subject.toLowerCase().includes(q) ||
-        m.body.toLowerCase().includes(q)
+        (m.body || '').toLowerCase().includes(q)
       );
       this._renderList(filtered);
     });
@@ -61,7 +61,7 @@ window.sentView = {
           <span class="msg-time">${_formatDate(m.date)}</span>
         </div>
         <div class="msg-subject">${_escHtml(m.subject)}</div>
-        <div class="msg-preview">${_escHtml(m.body.slice(0, 60))}…</div>
+        <div class="msg-preview">${_escHtml((m.preview || m.body || '').slice(0, 60))}</div>
       </div>
     `).join('');
   },
@@ -110,7 +110,7 @@ window.sentView = {
           </div>
         </div>
         ${trackHtml}
-        <div class="detail-body">${_escHtml(msg.body)}</div>
+        <div class="detail-body">${_escHtml(msg.body || '')}</div>
       `;
     });
   },
