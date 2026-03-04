@@ -97,8 +97,9 @@ window.trashView = {
             <button class="btn btn-danger" onclick="trashView._purge('${msg.id}')">🗑 永久删除</button>
           </div>
         </div>
-        <div class="detail-body">${_escHtml(msg.body || '')}</div>
+        <div class="detail-body" id="trashBodyWrap"></div>
       `;
+      _renderMailBody('trashBodyWrap', msg.body || '');
     });
   },
 

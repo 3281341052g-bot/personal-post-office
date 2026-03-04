@@ -166,7 +166,46 @@ function _skeletonList(n) {
     </div>`;
   return Array(n).fill(item).join('');
 }
+/* 渲染邮件正文：HTML 邮件用 iframe 沙箱，纯文本直接显示 */
+function _renderMailBody(containerId, body) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  const isHtml = /<(html|body|div|table|p|span|br|img|style)\b/i.test(body);
+  if (isHtml) {
+    const iframe = document.createElement('iframe');
+    iframe.sandbox = 'allow-same-origin';
+    iframe.style.cssText = 'width:100%;border:none;display:block;min-height:200px';
+    wrap.style.padding = '0';
+    wrap.appendChild(iframe);
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    doc.open();
+    doc.write(`<!doctype html><html><head>
+      <meta charset="utf-8">
+      <style>
+        body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+          font-size:14px;line-height:1.7;color:#1d1d1f;margin:20px 24px;word-break:break-word;}
+        img{max-width:100%;height:auto;}
+        a{color:#0071e3;}
+        *{box-sizing:border-box;}
+      </style></head><body>${body}</body></html>`);
+    doc.close();
+    // 自动撑高 iframe
+    const resize = () => {
+      try {
+        const h = iframe.contentDocument.body.scrollHeight;
+        iframe.style.height = h + 'px';
+      } catch(e){}
+    };
+    iframe.onload = resize;
+    setTimeout(resize, 150);
+    setTimeout(resize, 600);
+  } else {
+    wrap.style.whiteSpace = 'pre-wrap';
+    wrap.textContent = body;
+  }
+}
 window._avatarColor = avatarColor;
 window._formatDate = formatDate;
 window._escHtml = _escHtml;
 window._skeletonList = _skeletonList;
+window._renderMailBody = _renderMailBody;

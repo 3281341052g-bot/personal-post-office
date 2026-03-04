@@ -109,8 +109,9 @@ window.inboxView = {
             <button class="btn btn-danger" onclick="inboxView._delete('${msg.id}')">🗑 删除</button>
           </div>
         </div>
-        <div class="detail-body">${escHtml(msg.body || '')}</div>
+        <div class="detail-body" id="inboxBodyWrap"></div>
       `;
+      _renderMailBody('inboxBodyWrap', msg.body || '');
     });
   },
 

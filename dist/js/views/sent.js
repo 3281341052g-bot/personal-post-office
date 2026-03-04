@@ -95,8 +95,9 @@ window.sentView = {
             <button class="btn btn-danger" onclick="sentView._delete('${msg.id}')">🗑 删除</button>
           </div>
         </div>
-        <div class="detail-body">${_escHtml(msg.body || '')}</div>
+        <div class="detail-body" id="sentBodyWrap"></div>
       `;
+      _renderMailBody('sentBodyWrap', msg.body || '');
     });
   },
 
