@@ -99,7 +99,7 @@ window.trashView = {
         </div>
         <div class="detail-body" id="trashBodyWrap"></div>
       `;
-      _renderMailBody('trashBodyWrap', msg.body || '');
+      _renderMailBody('trashBodyWrap', msg.body || '', msg.bodyType || '');
     });
   },
 

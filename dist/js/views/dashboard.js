@@ -166,42 +166,57 @@ function _skeletonList(n) {
     </div>`;
   return Array(n).fill(item).join('');
 }
-/* 渲染邮件正文：HTML 邮件用 iframe 沙箱，纯文本直接显示 */
-function _renderMailBody(containerId, body) {
+/* 渲染邮件正文：HTML 邮件用 iframe 沙箱，纯文本直接显示
+ * body: string, bodyType: 'html'|'plain'（可选，不传则自动检测）
+ */
+function _renderMailBody(containerId, body, bodyType) {
   const wrap = document.getElementById(containerId);
   if (!wrap) return;
-  const isHtml = /<(html|body|div|table|p|span|br|img|style)\b/i.test(body);
+
+  // 优先用服务端传来的 bodyType，否则自动检测
+  const isHtml = bodyType === 'html' ||
+    (bodyType !== 'plain' && /<(html|body|div|table|td|p|span|br|img|style|font)\b/i.test(body));
+
   if (isHtml) {
+    // 外层容器去掉 padding，让 iframe 填满
+    wrap.style.padding = '0';
+    wrap.style.overflow = 'hidden';
+
     const iframe = document.createElement('iframe');
     iframe.sandbox = 'allow-same-origin';
-    iframe.style.cssText = 'width:100%;border:none;display:block;min-height:200px';
-    wrap.style.padding = '0';
+    iframe.scrolling = 'no';
+    iframe.style.cssText = 'width:100%;border:none;display:block;min-height:120px;';
     wrap.appendChild(iframe);
+
     const doc = iframe.contentDocument || iframe.contentWindow.document;
     doc.open();
     doc.write(`<!doctype html><html><head>
-      <meta charset="utf-8">
-      <style>
-        body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-          font-size:14px;line-height:1.7;color:#1d1d1f;margin:20px 24px;word-break:break-word;}
-        img{max-width:100%;height:auto;}
-        a{color:#0071e3;}
-        *{box-sizing:border-box;}
-      </style></head><body>${body}</body></html>`);
+<meta charset="utf-8">
+<style>
+  html,body{margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:14px;line-height:1.7;color:#1d1d1f;padding:20px 24px;word-break:break-word;}
+  img{max-width:100%;height:auto;display:block;}
+  a{color:#0071e3;}
+  *{box-sizing:border-box;}
+  table{max-width:100%;border-collapse:collapse;}
+</style></head><body>${body}</body></html>`);
     doc.close();
-    // 自动撑高 iframe
-    const resize = () => {
+
+    // 撑高 iframe 以匹配内容，使外层滚动
+    function resize() {
       try {
-        const h = iframe.contentDocument.body.scrollHeight;
-        iframe.style.height = h + 'px';
-      } catch(e){}
-    };
-    iframe.onload = resize;
-    setTimeout(resize, 150);
-    setTimeout(resize, 600);
+        const h = doc.documentElement.scrollHeight || doc.body.scrollHeight;
+        if (h > 0) iframe.style.height = h + 'px';
+      } catch(e) {}
+    }
+    iframe.addEventListener('load', resize);
+    setTimeout(resize, 100);
+    setTimeout(resize, 400);
+    setTimeout(resize, 1200);
   } else {
     wrap.style.whiteSpace = 'pre-wrap';
-    wrap.textContent = body;
+    wrap.textContent = body || '（无正文）';
   }
 }
 window._avatarColor = avatarColor;

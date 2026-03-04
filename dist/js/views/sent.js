@@ -97,7 +97,7 @@ window.sentView = {
         </div>
         <div class="detail-body" id="sentBodyWrap"></div>
       `;
-      _renderMailBody('sentBodyWrap', msg.body || '');
+      _renderMailBody('sentBodyWrap', msg.body || '', msg.bodyType || '');
     });
   },
 

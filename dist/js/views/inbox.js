@@ -111,7 +111,7 @@ window.inboxView = {
         </div>
         <div class="detail-body" id="inboxBodyWrap"></div>
       `;
-      _renderMailBody('inboxBodyWrap', msg.body || '');
+      _renderMailBody('inboxBodyWrap', msg.body || '', msg.bodyType || '');
     });
   },
 

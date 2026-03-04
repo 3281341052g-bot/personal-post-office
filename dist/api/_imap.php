@@ -84,7 +84,7 @@ class ImapClient {
     // 获取单封邮件完整内容
     public function getMessage($uid, $folder = 'INBOX') {
         $this->connect($folder);
-        $body = $this->getBody($uid);
+        $bodyInfo = $this->getBody($uid);
         imap_setflag_full($this->conn, $uid, '\\Seen', ST_UID);
 
         $header = imap_rfc822_parse_headers(imap_fetchheader($this->conn, $uid, FT_UID));
@@ -100,7 +100,8 @@ class ImapClient {
             'to'        => $to['name'],
             'toEmail'   => $to['email'],
             'subject'   => $this->decodeSubject($header->subject ?? '（无主题）'),
-            'body'      => $body,
+            'body'      => $bodyInfo['body'],
+            'bodyType'  => $bodyInfo['type'],  // 'html' or 'plain'
             'date'      => date('c', strtotime($header->date ?? 'now')),
         ];
         $this->close();
@@ -146,30 +147,33 @@ class ImapClient {
         $structure = imap_fetchstructure($this->conn, $uid, FT_UID);
         if (!isset($structure->parts)) {
             // 单部分
-            $body = imap_body($this->conn, $uid, FT_UID);
-            return $this->decode($body, $structure->encoding ?? 0);
+            $raw  = imap_body($this->conn, $uid, FT_UID);
+            $body = $this->decode($raw, $structure->encoding ?? 0);
+            $type = (isset($structure->subtype) && strtolower($structure->subtype) === 'html') ? 'html' : 'plain';
+            return ['body' => $body, 'type' => $type];
         }
-        // 多部分，取 text/plain 优先
-        return $this->extractText($uid, $structure->parts, '');
+        // 多部分：优先 text/plain，其次 text/html
+        $plain = $this->extractPart($uid, $structure->parts, '', 'plain');
+        if ($plain !== null) return ['body' => $plain, 'type' => 'plain'];
+        $html  = $this->extractPart($uid, $structure->parts, '', 'html');
+        if ($html  !== null) return ['body' => $html,  'type' => 'html'];
+        return ['body' => '', 'type' => 'plain'];
     }
 
-    private function extractText($uid, $parts, $prefix) {
+    private function extractPart($uid, $parts, $prefix, $subtype) {
         foreach ($parts as $idx => $part) {
             $partNum = $prefix ? $prefix . '.' . ($idx + 1) : (string)($idx + 1);
-            if ($part->type === 0) { // text
-                $subtype = strtolower($part->subtype);
-                if ($subtype === 'plain') {
-                    $raw = imap_fetchbody($this->conn, $uid, $partNum, FT_UID);
-                    $text = $this->decode($raw, $part->encoding);
-                    return $this->convertCharset($text, $part->parameters ?? []);
-                }
+            if ($part->type === 0 && strtolower($part->subtype) === $subtype) {
+                $raw  = imap_fetchbody($this->conn, $uid, $partNum, FT_UID);
+                $text = $this->decode($raw, $part->encoding);
+                return $this->convertCharset($text, $part->parameters ?? []);
             }
             if (isset($part->parts)) {
-                $result = $this->extractText($uid, $part->parts, $partNum);
-                if ($result) return $result;
+                $result = $this->extractPart($uid, $part->parts, $partNum, $subtype);
+                if ($result !== null) return $result;
             }
         }
-        return '';
+        return null;
     }
 
     private function decode($text, $encoding) {
