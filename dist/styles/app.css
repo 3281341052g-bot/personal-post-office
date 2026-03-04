@@ -669,12 +669,10 @@
 
 .detail-body {
   padding: 22px 26px;
-  flex: 1;
   font-size: 14.5px;
   line-height: 1.85;
   color: var(--text);
   word-break: break-word;
-  overflow: hidden;
 }
 
 /* ══════════════════════════════════════

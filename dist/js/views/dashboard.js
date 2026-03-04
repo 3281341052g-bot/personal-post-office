@@ -180,7 +180,6 @@ function _renderMailBody(containerId, body, bodyType) {
   if (isHtml) {
     // 外层容器去掉 padding，让 iframe 填满
     wrap.style.padding = '0';
-    wrap.style.overflow = 'hidden';
 
     const iframe = document.createElement('iframe');
     iframe.sandbox = 'allow-same-origin';
