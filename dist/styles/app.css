@@ -635,6 +635,7 @@
 .detail-header {
   padding: 22px 26px 18px;
   border-bottom: 1px solid var(--divider);
+  flex-shrink: 0;
 }
 .detail-subject {
   font-size: 19px;
@@ -673,6 +674,7 @@
   line-height: 1.85;
   color: var(--text);
   word-break: break-word;
+  flex-shrink: 0;
 }
 
 /* ══════════════════════════════════════
