@@ -1,0 +1,370 @@
+/* landing.css - Apple Style Landing Page */
+body.landing-page {
+    background: #fbfbfd;
+    color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+}
+
+/* Global Nav */
+.global-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.nav-content {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 100%;
+}
+
+.nav-logo {
+    font-size: 15px;
+    color: #1d1d1f;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    font-size: 13px;
+    color: #1d1d1f;
+    opacity: 0.8;
+    margin: 0 16px;
+    transition: opacity 0.3s;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+}
+
+.btn-login-nav {
+    background: #1d1d1f;
+    color: #fff;
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 980px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.btn-login-nav:hover {
+    transform: scale(1.05);
+    background: #000;
+}
+
+/* Hero Section */
+.hero-section {
+    padding-top: 48px;
+    /* account for nav bar */
+    height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.hero-title {
+    font-size: 130px;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 1.05;
+    margin: 0 0 16px 0;
+    color: #1d1d1f;
+    animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pro-text {
+    background: linear-gradient(120deg, #ff375f 0%, #ff9f0a 40%, #bf5af2 80%, #0a84ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-subtitle {
+    font-size: 42px;
+    font-weight: 600;
+    color: #86868b;
+    letter-spacing: -0.03em;
+    margin: 0 0 24px 0;
+    animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.hero-price {
+    font-size: 24px;
+    font-weight: 500;
+    color: #86868b;
+    margin: 0 0 50px 0;
+    animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    z-index: 10;
+}
+
+.btn-buy {
+    background: #0071e3;
+    color: #fff;
+    border-radius: 980px;
+    padding: 14px 28px;
+    font-size: 19px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s, transform 0.3s;
+    box-shadow: 0 8px 16px rgba(0, 113, 227, 0.2);
+}
+
+.btn-buy:hover {
+    background: #0077ed;
+    transform: scale(1.03);
+}
+
+.btn-link {
+    color: #2997ff;
+    font-size: 17px;
+    padding: 12px 0;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.hero-media {
+    margin-top: 60px;
+    width: 100%;
+    max-width: 900px;
+    animation: fadeZoom 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-media img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.8));
+    border-radius: 20px;
+}
+
+/* 渐变流光背景 */
+.ambient-glow {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle at center, rgba(0, 113, 227, 0.1) 0%, transparent 60%);
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Feature Grid (Bento) */
+.bento-section {
+    padding: 80px 20px 120px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.bento-section-title {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    text-align: center;
+    margin-bottom: 60px;
+    color: #1d1d1f;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.bento-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 32px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 420px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.bento-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.bento-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    color: #1d1d1f;
+    letter-spacing: -0.02em;
+}
+
+.bento-card p {
+    font-size: 17px;
+    color: #86868b;
+    margin: 12px 0 0 0;
+    line-height: 1.5;
+}
+
+.card-large {
+    grid-column: span 2;
+    min-height: 540px;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    background: #ffffff;
+}
+
+.card-large h3 {
+    font-size: 48px;
+    letter-spacing: -0.04em;
+}
+
+.card-large p {
+    font-size: 20px;
+    max-width: 600px;
+}
+
+.bento-card .highlight {
+    background: linear-gradient(90deg, #ff9f0a, #ff375f, #bf5af2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 登录弹窗 (Overlay) */
+.login-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(245, 245, 247, 0.8);
+    backdrop-filter: saturate(180%) blur(40px);
+    -webkit-backdrop-filter: saturate(180%) blur(40px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-modal-overlay .login-card {
+    transform: translateY(40px);
+    opacity: 0;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.login-modal-overlay.active .login-card {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.close-btn {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    color: #1d1d1f;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.2s;
+    z-index: 10010;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+}
+
+.footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 12px;
+    color: #86868b;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
