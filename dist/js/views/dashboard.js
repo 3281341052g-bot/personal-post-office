@@ -20,19 +20,19 @@ window.dashboardView = {
 
       <!-- 统计卡片 -->
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card" onclick="router.go('inbox')" style="cursor:pointer">
           <span class="stat-icon">📥</span>
           <div class="stat-value" id="statInbox">–</div>
           <div class="stat-name">收件总数</div>
           <div class="stat-trend" id="statUnreadHint"></div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" onclick="router.go('sent')" style="cursor:pointer">
           <span class="stat-icon">📤</span>
           <div class="stat-value" id="statSent">–</div>
           <div class="stat-name">已发送</div>
           <div class="stat-trend" style="color:var(--text-tertiary)">保持联系中</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" onclick="router.go('contacts')" style="cursor:pointer">
           <span class="stat-icon">👥</span>
           <div class="stat-value" id="statContacts">–</div>
           <div class="stat-name">联系人</div>
