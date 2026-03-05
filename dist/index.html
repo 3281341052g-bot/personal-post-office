@@ -169,7 +169,7 @@
           localStorage.removeItem('ppo_email');
         }
         localStorage.setItem('ppo_token', res.data.token);
-        localStorage.setItem('ppo_user', JSON.stringify(res.data.user));
+        localStorage.setItem('ppo_user', JSON.stringify({ ...res.data.user, loggedIn: true }));
         window.location.href = 'app.html';
       })
       .catch(() => {
