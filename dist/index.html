@@ -147,22 +147,39 @@
 
       errEl.classList.remove('show');
 
-      if (remember) {
-        localStorage.setItem('ppo_email', email);
-      } else {
-        localStorage.removeItem('ppo_email');
-      }
+      const submitBtn = form.querySelector('button[type=submit]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '登录中…';
 
-      const userName = email.split('@')[0];
-      localStorage.setItem('ppo_user', JSON.stringify({
-        email,
-        name: userName.charAt(0).toUpperCase() + userName.slice(1),
-        avatar: userName.charAt(0).toUpperCase(),
-        loggedIn: true
-      }));
-
-      // 跳转到内部系统 (App.html)
-      window.location.href = 'app.html';
+      fetch('api/login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (!res.ok) {
+          errEl.textContent = res.error || '登录失败，请重试';
+          errEl.classList.add('show');
+          submitBtn.disabled = false;
+          submitBtn.textContent = '继续';
+          return;
+        }
+        if (remember) {
+          localStorage.setItem('ppo_email', email);
+        } else {
+          localStorage.removeItem('ppo_email');
+        }
+        localStorage.setItem('ppo_token', res.data.token);
+        localStorage.setItem('ppo_user', JSON.stringify(res.data.user));
+        window.location.href = 'app.html';
+      })
+      .catch(() => {
+        errEl.textContent = '网络错误，请重试';
+        errEl.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '继续';
+      });
     });
   </script>
 </body>
