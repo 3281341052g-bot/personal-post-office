@@ -79,11 +79,13 @@ window.trashView = {
       if (!msg) return;
       const det = document.getElementById('trashDetail');
       if (!det) return;
+      det.classList.add('mobile-open');
 
       const isReceived = !!msg.from;
 
       det.innerHTML = `
         <div class="detail-header">
+          <button class="detail-back-btn" onclick="document.getElementById('trashDetail').classList.remove('mobile-open')">← 返回</button>
           <div class="detail-subject">${_escHtml(msg.subject || '（无主题）')}</div>
           <div class="detail-meta">
             ${isReceived

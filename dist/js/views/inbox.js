@@ -90,9 +90,11 @@ window.inboxView = {
 
       const det = document.getElementById('inboxDetail');
       if (!det) return;
+      det.classList.add('mobile-open');
 
       det.innerHTML = `
         <div class="detail-header">
+          <button class="detail-back-btn" onclick="document.getElementById('inboxDetail').classList.remove('mobile-open')">← 返回</button>
           <div class="detail-subject">${escHtml(msg.subject)}</div>
           <div class="detail-meta">
             <div class="detail-meta-row">

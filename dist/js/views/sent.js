@@ -77,9 +77,11 @@ window.sentView = {
       if (!msg) return;
       const det = document.getElementById('sentDetail');
       if (!det) return;
+      det.classList.add('mobile-open');
 
       det.innerHTML = `
         <div class="detail-header">
+          <button class="detail-back-btn" onclick="document.getElementById('sentDetail').classList.remove('mobile-open')">← 返回</button>
           <div class="detail-subject">${_escHtml(msg.subject)}</div>
           <div class="detail-meta">
             <div class="detail-meta-row">

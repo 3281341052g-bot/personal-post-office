@@ -695,6 +695,8 @@
   font-size: 14px;
 }
 
+.detail-back-btn { display: none; }
+
 .detail-header {
   padding: 24px 28px 20px;
   border-bottom: 1px solid var(--divider);
@@ -1409,4 +1411,109 @@
 .status-dot.connecting {
   background: var(--warning);
   animation: pulse 1s infinite;
+}
+
+/* ══════════════════════════════════════
+   移动端响应式
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* 侧边栏隐藏，改为底部导航 */
+  .sidebar {
+    display: none;
+  }
+
+  /* 主内容占满全屏 */
+  .main-content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* 顶部栏简化 */
+  .page-header {
+    padding: 12px 16px;
+  }
+  .page-header .search-bar {
+    display: none;
+  }
+
+  /* 仪表盘 */
+  .dashboard-body {
+    padding: 16px;
+  }
+  .welcome-banner {
+    padding: 24px 20px;
+  }
+  .welcome-banner h2 {
+    font-size: 22px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 14px 12px;
+  }
+  .stat-value {
+    font-size: 22px;
+  }
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 列表+详情：手机上只显示列表，点击后显示详情 */
+  .list-detail {
+    flex-direction: column;
+  }
+  .message-list-pane {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+  }
+  .message-detail-pane {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 100;
+    background: var(--bg-white);
+  }
+  .message-detail-pane.mobile-open {
+    display: block;
+  }
+
+  /* 详情面板顶部加返回按钮 */
+  .detail-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0 0 12px 0;
+  }
+
+  /* 写信页面 */
+  .compose-body {
+    padding: 14px;
+  }
+  .compose-card {
+    padding: 16px;
+  }
+
+  /* 联系人 */
+  .contacts-body {
+    padding: 14px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* 设置 */
+  .settings-body {
+    padding: 14px;
+  }
 }
