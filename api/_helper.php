@@ -3,6 +3,10 @@
  * 公共工具函数
  */
 
+// 禁止 PHP 警告/报错破坏 JSON 格式
+error_reporting(0);
+ini_set('display_errors', '0');
+
 // CORS 头（允许前端跨域调用）
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
