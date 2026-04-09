@@ -61,12 +61,14 @@ class ImapClient {
             $from = $this->decodeHeader($header->from[0] ?? null);
             $to   = $this->decodeHeader($header->to[0]   ?? null);
 
+            $flagsStr = $flags ?: '';
+
             $messages[] = [
                 'id'       => 'imap-' . $uid,
                 'uid'      => $uid,
                 'folder'   => strtolower($folder) === 'inbox' ? 'inbox' : 'sent',
-                'unread'   => !in_array('\\Seen', $flags),
-                'starred'  => in_array('\\Flagged', $flags),
+                'unread'   => strpos($flagsStr, '\\Seen') === false,
+                'starred'  => strpos($flagsStr, '\\Flagged') !== false,
                 'from'     => $from['name'],
                 'fromEmail'=> $from['email'],
                 'to'       => $to['name'],
